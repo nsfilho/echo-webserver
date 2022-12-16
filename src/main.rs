@@ -5,6 +5,10 @@ use chrono::{DateTime, Utc};
 use rocket::serde::json::Json;
 use rocket::serde::Serialize;
 
+mod cors;
+
+use cors::CORS;
+
 #[derive(Serialize)]
 #[serde(crate = "rocket::serde")]
 struct EchoResponse {
@@ -26,5 +30,5 @@ fn index() -> Json<EchoResponse> {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
+    rocket::build().attach(CORS).mount("/", routes![index])
 }
